@@ -17,16 +17,16 @@ public class PagoTarjeta implements Pago {
 	
 	@Override
 	public void realizarPago(double monto) {
-	 this.montoPagado=(monto*0.15)+monto;
+	 this.montoPagado=monto+(monto*0.15);
 	}
 
 	@Override
 	public void imprimirRecibo() {
-		System.out.println("\n---- RECIBO DE COMPRA ----\n");
+		System.out.println("\n****** RECIBO DE COMPRA *****\n");
 		System.out.println("Número de tarjeta: " + this.numeroTarjeta);
 		System.out.println("Fecha de pago: " + this.fechaPago.format(formato));
 		System.out.println("Monto Pagado: " + decimalFormato.format(this.montoPagado));
-		System.out.println("\n-------------------------------\n");
+		System.out.println("\n******************************\n");
 	}
 	
 	public PagoTarjeta() {

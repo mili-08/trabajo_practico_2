@@ -21,10 +21,10 @@ public class PagoEfectivo implements Pago {
 
 	@Override
 	public void imprimirRecibo() {
-	 System.out.println("\n---- RECIBO DE COMPRA ----\n");
+	 System.out.println("\n****** RECIBO DE COMPRA *****\n");
 	 System.out.println("Fecha de pago: " + this.fechaPago.format(formato));
      System.out.println("Monto Pagado: " + decimalFormato.format(this.montoPagado));
-     System.out.println("\n-------------------------------\n");
+     System.out.println("\n******************************\n");
 	}
 	
 	public PagoEfectivo() {

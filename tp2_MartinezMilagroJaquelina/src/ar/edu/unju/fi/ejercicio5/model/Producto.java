@@ -1,5 +1,7 @@
 package ar.edu.unju.fi.ejercicio5.model;
 
+import java.text.DecimalFormat;
+import java.text.Format;
 
 public class Producto {
 	private Integer codigo;
@@ -8,6 +10,8 @@ public class Producto {
 	private OrigenDeFabricacion origenFabricacion;
 	private Categoria categoria;
 	private boolean estado;
+	
+	private DecimalFormat decimalFormato = new DecimalFormat("#,###.00");
 	
 	public enum OrigenDeFabricacion {
 		ARGENTINA, CHINA, BRASIL, URUGUAY
@@ -34,7 +38,7 @@ public class Producto {
 
 	@Override
 	public String toString() {
-		return "Codigo: " + codigo + "\nDescripcion: " + descripcion + "\nPrecio: " + precio
+		return "Codigo: " + codigo + "\nDescripcion: " + descripcion + "\nPrecio: " +  decimalFormato.format(precio)
 				+ "\nOrigen de Fabricacion: " + origenFabricacion + "\nCategoria: " + categoria;
 	}
 

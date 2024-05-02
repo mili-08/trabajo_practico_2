@@ -55,7 +55,7 @@ public class Main {
 	}
 	
 	public static String menu () {
-		System.out.println("------ 	MENU ---------\n");
+		System.out.println("===== MENU ======\n");
 		System.out.println("1- Mostrar Productos\n2- Realizar Compra\n3- Salir");
 		System.out.print("\nElegir una opcion: ");
 		return sc.next();
@@ -73,10 +73,10 @@ public class Main {
 	
 	public static void mostrarProductos() {
 		if (!productos.isEmpty()) {
-			System.out.println("====== PRODUCTOS ======");
+			System.out.println("\n======== PRODUCTOS =========\n");
 			for (Producto p: productos)
 				System.out.println(p + "\n--------------------------------\n");
-			System.out.println("=======================");
+			System.out.println("===================================\n");
 		}else 
 			System.out.println("\n----- No hay productos cargados --------\n");
 	}
@@ -103,11 +103,26 @@ public class Main {
 		int valor=0;
 		do
 		{
-			double totalCompra = resumenCompra(productosSeleccionados);
+			//double totalCompra = resumenCompra(productosSeleccionados);
+			double totalCompra=0;
+			if(productosSeleccionados.size()>0) 
+			    totalCompra = resumenCompra(productosSeleccionados);
+			
 			valor=verificarCodigo("\n1- Realizar Pago\n2- Eliminar producto del carrito: \n\nElegir una opcion: ", 2);
 	        switch (valor) {
-				case 1: realizarPago(totalCompra);break;
-				case 2: eliminarProductoCarrito(productosSeleccionados);break;
+				case 1: 
+					if (productosSeleccionados.size()>0) {
+					   realizarPago(totalCompra);
+					}else 
+						System.out.println("\n------ No hay productos cargados en el carrito -----\n");
+					break;
+				case 2: 
+					if (productosSeleccionados.size()==0) {
+						System.out.println("\n------ No hay productos cargados en el carrito -----\n");
+						valor=1;
+					}
+					else 
+					  eliminarProductoCarrito(productosSeleccionados);break;
 				default:
 			     System.err.println("\n----  Opcion Invalida  -----\n");
 		   }
@@ -147,7 +162,7 @@ public class Main {
 	
 	public static double resumenCompra(List<Producto> productosS) {
 		double valor=0;
-		System.out.println("\n------ Carrito de Compra ------\n");
+		System.out.println("\n--------------- Carrito de Compra -----------------\n");
 		System.out.println("Cod        Descripcion                 Precio\n");
 		for(Producto p: productosS) {
 			//System.out.println(p.getCodigo() +"     "+ p.getDescripcion() + "                    $" + p.getPrecio());
@@ -155,6 +170,7 @@ public class Main {
 			valor=valor+p.getPrecio();
 		}
 		System.out.printf("\nTotal: $%,.2f%n", valor);
+		System.out.println("\n--------------------------------------------------------\n");
 		return valor;
 	}
 	
@@ -169,10 +185,11 @@ public class Main {
 			break;
 		case 2: 
 			PagoTarjeta pagoTarjeta = new PagoTarjeta();
-		    System.out.print("Ingrese el numero de tarjeta: ");
+		    System.out.print("\nIngrese el numero de tarjeta: ");
 		    pagoTarjeta.setNumeroTarjeta(sc.next());
 		    pagoTarjeta.setFechaPago(LocalDate.now());
 		    pagoTarjeta.setMontoPago(total);
+		    pagoTarjeta.realizarPago(total);
 		    pagoTarjeta.imprimirRecibo();
 			break;
 		default:
@@ -182,7 +199,7 @@ public class Main {
 	
 	public static void  eliminarProductoCarrito (List<Producto> productosS) {
 		boolean band=false;
-		Integer codigo = verificarCodigo("Ingrese el codigo del producto a eliminar: ", 15);
+		Integer codigo = verificarCodigo("\nIngrese el codigo del producto a eliminar: ", 15);
 		Iterator<Producto> iterator = productosS.iterator();
 		 while(iterator.hasNext()) {
 			 Producto p = iterator.next();
@@ -198,8 +215,3 @@ public class Main {
 	}
 
 }
-
-
-
-///verificar que muestra el true  o false cuadno se imprime
-//hacer un buen resumen de la compra
