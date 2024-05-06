@@ -55,7 +55,7 @@ public class Main {
 	
 	public static String menu() {
 		System.out.println("=========== Menu ============\n");
-		System.out.println("1- Mostrar productos");
+		System.out.println("1- Mostrar productos con stock");
 		System.out.println("2- Mostrar productos sin stock");
 		System.out.println("3- Incrementar los precios en un 20%");
 		System.out.println("4- Mostrar los productos que corresponden a la categoría Electrohogar y tengan stock");
@@ -82,7 +82,8 @@ public class Main {
 	
 	public static void mostrarProductos() {
 		System.out.println("\n--------- Productos con Stock -------------\n");
-		productos.forEach(printConsumer);
+		Predicate<Producto> filterProductoConStock = p -> p.isEstado();
+		productos.stream().filter(filterProductoConStock).forEach(printConsumer);
 		System.out.println("\n--------------------------------------------\n");
 	}
 	
@@ -114,8 +115,9 @@ public class Main {
 	
 	public static void ordernarDescendente() {
 		System.out.println("\n--------- Ordenados Descendentemente -------------\n");
-		 productos.sort(Comparator.comparing(Producto::getPrecio).reversed());
-		 productos.forEach(printConsumer);
+		 List<Producto>productosOrdenados = new ArrayList<>(productos);
+		 productosOrdenados.sort(Comparator.comparing(Producto::getPrecio).reversed());
+		 productosOrdenados.forEach(printConsumer);
 	     System.out.println("\n--------------------------------------------\n");
 	}
 	
